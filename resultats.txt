@@ -1,0 +1,3 @@
+Dupont | 34 | dupont@mail.fr | 50
+Martin | 27 | martin@mail.fr | 100
+Bernard | 45 | bernard@mail.fr | 25

@@ -1,6 +1,7 @@
 <?php
 require_once("jpgraph-4.4.3/src/jpgraph.php");
-require_once("jpgraph-4.4.3/src/jpgraph_pie.php");
+require_once("jpgraph-4.4.3/src/jpgraph_line.php");
+require_once("jpgraph-4.4.3/src/jpgraph_scatter.php");
 
 $contenu = file_get_contents("resultats.txt");
 $lignes = explode("\n", $contenu);
@@ -16,24 +17,50 @@ foreach ($lignes as $ligne) {
     }
 }
 
-$graph = new PieGraph(500, 350);
-$graph->SetShadow();
+$couleurs = array("#3498db", "#f1c40f", "#e74c95", "#2ecc71", "#9b59b6", "#e67e22");
 
-$graph->title->Set(mb_convert_encoding("Repartition des dons", "ISO-8859-1", "UTF-8"));
+$maxDon = max($dons);
+$echelleMax = $maxDon + ($maxDon * 0.2);
+$nbPoints = count($dons);
+
+$graph = new Graph(500, 350);
+$graph->SetScale("intlin", 0, $echelleMax, 0, $nbPoints - 1);
+$graph->SetMargin(60, 30, 50, 100);
+$graph->SetFrame(false);
+$graph->SetColor("white");
+
+$graph->title->Set(mb_convert_encoding("Montant des dons", "ISO-8859-1", "UTF-8"));
 $graph->title->SetFont(FF_FONT2, FS_BOLD);
-$graph->title->SetColor("#333333");
+$graph->title->SetColor("#555555");
 
-$pieplot = new PiePlot($dons);
-$pieplot->SetLegends($noms);
-$pieplot->SetSliceColors(array("#e91e63", "#3f51b5", "#00bcd4", "#4caf50", "#ff9800", "#9c27b0"));
+$graph->xaxis->SetTickLabels($noms);
+$graph->xaxis->SetTextTickInterval(1);
+$graph->xaxis->SetFont(FF_FONT1);
+$graph->yaxis->SetFont(FF_FONT1);
+$graph->xgrid->Show(false);
+$graph->ygrid->SetFill(true, "#f0f0f0", "#ffffff");
 
+$ligne = new LinePlot($dons);
+$ligne->SetColor("#cccccc");
+$ligne->SetWeight(2);
+$graph->Add($ligne);
 
-$pieplot->SetLabelType(PIE_VALUE_ABS);
+for ($i = 0; $i < $nbPoints; $i++) {
+    $couleur = $couleurs[$i % count($couleurs)];
 
-$pieplot->value->Show();
-$pieplot->value->SetFormat("%d EUR");
-$pieplot->value->SetFont(FF_FONT2, FS_BOLD);
-$pieplot->value->SetColor("black");
+    $point = new ScatterPlot(array($dons[$i]), array($i));
+    $point->mark->SetType(MARK_FILLEDCIRCLE);
+    $point->mark->SetColor($couleur);
+    $point->mark->SetFillColor($couleur);
+    $point->mark->SetWidth(7);
+    $point->SetLegend($noms[$i]);
 
-$graph->Add($pieplot);
+    $graph->Add($point);
+}
+
+$graph->legend->SetPos(0.5, 0.98, "center", "bottom");
+$graph->legend->SetLayout(LEGEND_HOR);
+$graph->legend->SetFrameWeight(1);
+
 $graph->Stroke();
+?>

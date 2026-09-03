@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Resultats</title>
+<title>TP2</title>
 <style>
 body { font-family: Arial; margin: 0; }
 .haut { background-color: #b39ddb; padding: 10px 15px; color: white; font-size: 22px; display: flex; align-items: center; }
@@ -14,7 +14,7 @@ body { font-family: Arial; margin: 0; }
 
 <div class="haut">
 <img src="elephant.png">
-Resultats des dons
+TP2 - Exercice 2 : DONS
 </div>
 
 <div class="menu">
@@ -24,6 +24,8 @@ Resultats des dons
 </div>
 
 <div class="bas">
+
+<h2>Resultats des dons</h2>
 
 <?php
 $contenu = file_get_contents("resultats.txt");
@@ -52,11 +54,14 @@ if ($nombre > 0) {
 ?>
 
 <br><br>
-<img src="exo2_graphique.php">
+<div style="background:white; border:2px solid #4FC3E8; border-radius:12px; padding:15px; display:inline-block;">
+    <h3 style="margin:0 0 10px 0;">Line / Area</h3>
+    <img src="exo2_graphique.php">
+</div>
 <br><br>
+
 <a href="exo2_formulaire.php">Retour</a>
 
 </div>
-
 </body>
 </html>

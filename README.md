@@ -12,8 +12,8 @@ Fichiers : `index.php`, `exo1_index.php`, `exo1_page2.php`, `exo1_cours.php`
 ## Exercice 2 : DONS
 Formulaire de don caritatif (Nom, Age, Mail, Don). Chaque don est enregistré
 dans `resultats.txt`. Une page de résultats affiche la liste des dons, la
-somme totale, la moyenne d'âge des donateurs, et un graphique (camembert)
-généré avec la bibliothèque JPGraph.
+somme totale, la moyenne d'âge des donateurs, et un graphique (montant des
+dons par personne) généré avec la bibliothèque JPGraph.
 
 Fichiers : `exo2_formulaire.php`, `exo2_traitement.php`, `exo2_resultats.php`,
 `exo2_graphique.php`
